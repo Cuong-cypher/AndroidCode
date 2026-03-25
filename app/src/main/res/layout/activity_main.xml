@@ -1,4 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_wave">
@@ -10,23 +12,42 @@
         android:layout_marginTop="80dp"
         android:text="Welcome"
         android:textColor="#fff"
-        android:textSize="28sp"
+        android:textSize="50dp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="338dp"
+        android:layout_height="567dp"
+        android:layout_marginTop="100dp"
+        android:layout_centerInParent="true"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="200dp"
+        android:textSize="20dp"
+        android:text="Access your account to continue" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMain"
         android:layout_width="250dp"
         android:layout_height="64dp"
         android:gravity="center"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
         android:text="Get started"
         android:textSize="20sp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="50dp"
+        android:layout_marginBottom="120dp"
         android:includeFontPadding="false"
         android:minHeight="0dp"
         android:minWidth="0dp"
         android:backgroundTint="#4A90E2"/>
+
+
+
 </RelativeLayout>

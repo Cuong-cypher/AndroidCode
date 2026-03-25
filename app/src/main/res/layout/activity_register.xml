@@ -5,17 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#357ABD"
+        android:text="&lt;  Back"
+        android:textColor="#fff" />
+
     <TextView
         android:text="Register"
-        android:textSize="26sp"
+        android:layout_gravity="center"
+        android:textSize="50dp"
         android:textStyle="bold"
         android:textColor="#000"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="150dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <EditText
         android:hint="Full Name"
+        android:background="@android:drawable/edit_text"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
@@ -24,21 +35,46 @@
         android:hint="Email"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
+        android:background="@android:drawable/edit_text"
         android:layout_height="50dp"/>
 
     <EditText
         android:hint="Password"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
+        android:background="@android:drawable/edit_text"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 
+
     <Button
-        android:text="Register"
+        android:id="@+id/btnRegister"
+        android:layout_gravity="center"
+        android:layout_width="275dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="#357ABD"
-        android:textColor="#fff"
+        android:textSize="20dp"
+        android:text="Register"
+        android:textColor="#fff" />
+
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Have an account?"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_gravity="center"
+        android:layout_width="275dp"
+        android:layout_height="50dp"
+        android:textSize="20dp"
+        android:backgroundTint="#357ABD"
+        android:text="Login"
+        android:textColor="#fff" />
 
 </LinearLayout>

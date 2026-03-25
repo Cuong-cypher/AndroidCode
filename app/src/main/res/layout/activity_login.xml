@@ -15,15 +15,17 @@
         android:textColor="#fff" />
 
     <TextView
-        android:text="Login"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:layout_marginTop="220dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        android:text="Login"
+        android:textColor="#000"
+        android:textSize="50dp"
+        android:textStyle="bold" />
 
     <EditText
+        android:id="@+id/txtEmail"
         android:hint="Email"
         android:layout_marginTop="20dp"
         android:background="@android:drawable/edit_text"
@@ -31,19 +33,23 @@
         android:layout_height="50dp"/>
 
     <EditText
+        android:id="@+id/txtPassword"
         android:hint="Password"
         android:inputType="textPassword"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:drawable/edit_text"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="275dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="#357ABD"
         android:text="Login"
+        android:textSize="20dp"
         android:textColor="#fff" />
 
     <TextView
@@ -56,9 +62,12 @@
         />
 
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/btnRegister"
+        android:layout_width="275dp"
+        android:layout_gravity="center"
         android:layout_height="50dp"
         android:backgroundTint="#357ABD"
+        android:textSize="20dp"
         android:text="Register"
         android:textColor="#fff" />
 </LinearLayout>
