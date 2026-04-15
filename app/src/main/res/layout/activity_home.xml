@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#FFFFFF"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="30dp">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="8dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
 
         <EditText
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Tìm kiếm ứng dụng, trò chơi..."
-            android:padding="12dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/search_background"
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:drawablePadding="8dp"
-            android:layout_marginBottom="12dp"/>
+            android:hint="Tìm kiếm ứng dụng, trò chơi..."
+            android:padding="12dp" />
 
         <ImageView
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="160dp"
+            android:layout_marginBottom="16dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/banner_sample"
-            android:layout_marginBottom="16dp"/>
+            android:src="@drawable/banner_sample" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -72,6 +79,7 @@
                         android:textColor="#000"
                         android:textSize="14sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
@@ -96,6 +104,7 @@
                         android:textColor="#000"
                         android:textSize="14sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
@@ -120,6 +129,7 @@
                         android:textColor="#000"
                         android:textSize="14sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
@@ -148,151 +158,28 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnHome"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:text="Button" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Top miễn phí"
+            android:text="Mới phát hành"
             android:textColor="#000"
             android:textSize="18sp"
             android:textStyle="bold" />
-
-          <LinearLayout
-            android:id="@+id/topFreeList"
-            android:orientation="vertical"
+        <ListView
+            android:id="@+id/myList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="#F5F5F5">
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/app_sample"/>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_marginStart="8dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Tên App"
-                        android:textColor="#000"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="Miễn phí"
-                        android:textColor="#FF5722"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cài đặt" />
-            </LinearLayout>
-              <LinearLayout
-                  android:orientation="horizontal"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:padding="8dp"
-                  android:layout_marginBottom="8dp"
-                  android:background="#F5F5F5">
-
-                  <ImageView
-                      android:layout_width="60dp"
-                      android:layout_height="60dp"
-                      android:scaleType="centerCrop"
-                      android:src="@drawable/app_sample"/>
-
-                  <LinearLayout
-                      android:orientation="vertical"
-                      android:layout_marginStart="8dp"
-                      android:layout_width="0dp"
-                      android:layout_weight="1"
-                      android:layout_height="wrap_content">
-
-                      <TextView
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent"
-                          android:text="Tên App"
-                          android:textColor="#000"
-                          android:textSize="16sp"
-                          android:textStyle="bold" />
-
-                      <TextView
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:layout_marginTop="2dp"
-                          android:text="Miễn phí"
-                          android:textColor="#FF5722"
-                          android:textSize="14sp" />
-                  </LinearLayout>
-
-                  <Button
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="Cài đặt" />
-              </LinearLayout><LinearLayout
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="8dp"
-              android:layout_marginBottom="8dp"
-              android:background="#F5F5F5">
-
-              <ImageView
-                  android:layout_width="60dp"
-                  android:layout_height="60dp"
-                  android:scaleType="centerCrop"
-                  android:src="@drawable/app_sample"/>
-
-              <LinearLayout
-                  android:orientation="vertical"
-                  android:layout_marginStart="8dp"
-                  android:layout_width="0dp"
-                  android:layout_weight="1"
-                  android:layout_height="wrap_content">
-
-                  <TextView
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:text="Tên App"
-                      android:textColor="#000"
-                      android:textSize="16sp"
-                      android:textStyle="bold" />
-
-                  <TextView
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="2dp"
-                      android:text="Miễn phí"
-                      android:textColor="#FF5722"
-                      android:textSize="14sp" />
-              </LinearLayout>
-
-              <Button
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Cài đặt" />
-          </LinearLayout>
-        </LinearLayout>
-
+            android:layout_height="300dp"
+            android:layout_marginTop="8dp"
+            android:divider="#DDDDDD"
+            android:dividerHeight="1dp"/>
     </LinearLayout>
-</ScrollView>
+
+</FrameLayout>
