@@ -3,13 +3,11 @@ package com.example.hitcapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import com.google.android.material.button.MaterialButton;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -18,26 +16,24 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.btnRegister), (v, insets) -> {
-            return insets;
+
+        // Nút Quay lại (MaterialButton)
+        MaterialButton btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
+
+        // Chuyển sang trang Đăng nhập (Hiện tại là TextView)
+        TextView btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(v -> {
+            Intent it = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(it);
+            finish();
         });
 
-        Button Back = findViewById(R.id.btnBack);
-        Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(it);
-            }
-        });
-
-        Button Register = findViewById(R.id.btnLogin);
-        Register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(it);
-            }
+        // Nút Đăng ký (MaterialButton)
+        MaterialButton btnRegister = findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(v -> {
+            // Xử lý đăng ký ở đây (nếu cần)
+            finish(); // Đăng ký xong quay lại Login
         });
     }
 }

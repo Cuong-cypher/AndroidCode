@@ -3,13 +3,10 @@ package com.example.hitcapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import com.google.android.material.button.MaterialButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,15 +15,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(this.<View>findViewById(R.id.btnMain), (v, insets) -> {
-            return insets;
-        });
 
-        Button Next = findViewById(R.id.btnMain);
-        Next.setOnClickListener(new View.OnClickListener() {
+        MaterialButton btnMain = findViewById(R.id.btnMain);
+        btnMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent it = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(it);
             }
         });

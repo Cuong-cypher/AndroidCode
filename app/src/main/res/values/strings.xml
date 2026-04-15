@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">HITCApp</string>
+
+    <!-- Common -->
+    <string name="back">Quay lại</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+
+    <!-- Main Activity -->
+    <string name="discovery">KHÁM PHÁ</string>
+    <string name="main_title">Khởi đầu\nHành trình số</string>
+    <string name="main_subtitle">Trải nghiệm nền tảng công nghệ mạnh mẽ nhất ngay trong tầm tay bạn.</string>
+    <string name="explore_now">Khám phá ngay</string>
+
+    <!-- Login Activity -->
+    <string name="welcome_back">Chào mừng trở lại</string>
+    <string name="login_subtitle">Đăng nhập vào tài khoản của bạn</string>
+    <string name="new_user">Người mới? </string>
+    <string name="create_account">Tạo tài khoản</string>
+
+    <!-- Register Activity -->
+    <string name="join_us">Tham gia với chúng tôi</string>
+    <string name="register_subtitle">Tạo tài khoản mới</string>
+    <string name="full_name">Họ và tên</string>
+    <string name="already_have_account">Đã có tài khoản? </string>
 </resources>

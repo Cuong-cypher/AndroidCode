@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Lớp đổ bóng mờ ảo -->
+    <item>
+        <shape>
+            <corners android:radius="40dp" />
+            <solid android:color="#0D000000" />
+        </shape>
+    </item>
+
+    <!-- Lớp kính chính (Trong suốt 70%) -->
+    <item android:bottom="2dp" android:right="2dp">
+        <shape>
+            <gradient
+                android:startColor="#B3FFFFFF"
+                android:endColor="#80FFFFFF"
+                android:angle="135" />
+            <corners android:radius="40dp" />
+            <stroke
+                android:width="2dp"
+                android:color="#CCFFFFFF" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,53 +1,146 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_wave">
+    android:background="@drawable/bg_gradient_soft">
 
-    <TextView
+    <!-- Soft Overlay for depth -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.2"
+        android:background="@android:color/black" />
+
+    <!-- Hero Image Area with Tech-Portal Effect -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/logoContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:text="Welcome"
-        android:textColor="#fff"
-        android:textSize="50dp"
-        android:textStyle="bold" />
+        app:layout_constraintBottom_toTopOf="@id/bottomCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="338dp"
-        android:layout_height="567dp"
-        android:layout_marginTop="100dp"
-        android:layout_centerInParent="true"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        <!-- Outer decorative glow -->
+        <View
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:alpha="0.15"
+            android:background="@drawable/bg_gradient_soft"
+            android:rotation="45"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        <!-- Floating Ring -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="130dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="#40FFFFFF"
+            app:strokeWidth="1dp" />
+
+        <!-- Main Logo Frame -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/logoFrame"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            app:cardBackgroundColor="#15FFFFFF"
+            app:cardCornerRadius="110dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="#80FFFFFF"
+            app:strokeWidth="2dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="45dp"
+                android:scaleType="centerInside"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Premium Floating Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottomCard"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="200dp"
-        android:textSize="20dp"
-        android:text="Access your account to continue" />
+        android:layout_margin="20dp"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnMain"
-        android:layout_width="250dp"
-        android:layout_height="64dp"
-        android:gravity="center"
-        android:text="Get started"
-        android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="120dp"
-        android:includeFontPadding="false"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
-        android:backgroundTint="#4A90E2"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:padding="36dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:letterSpacing="0.2"
+                android:text="NVC SHOP"
+                android:textAllCaps="true"
+                android:textColor="#4A90E2"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:lineHeight="42sp"
+                android:text="Mua sắm\nThông minh"
+                android:textColor="#1E272E"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:lineSpacingExtra="5dp"
+                android:text="Khám phá hàng ngàn sản phẩm thời thượng với ưu đãi độc quyền."
+                android:textColor="#57606F"
+                android:textSize="16sp" />
+
+            <!-- Gradient Button Style -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMain"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="#4A90E2"
+                android:elevation="8dp"
+                android:text="Mua sắm ngay"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="20dp"
+                app:rippleColor="#FFFFFF" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

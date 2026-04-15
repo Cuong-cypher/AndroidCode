@@ -5,15 +5,15 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
-public class CustomAdapter extends BaseAdapter {
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductViewHolder> {
 
-    Context context;
-    ArrayList<AppItem> list;
+    private Context context;
+    private ArrayList<AppItem> list;
 
     public CustomAdapter(Context context, ArrayList<AppItem> list) {
         this.context = context;
@@ -22,64 +22,47 @@ public class CustomAdapter extends BaseAdapter {
 
     public static class AppItem {
         String name;
+        String price;
         String color;
 
-        public AppItem(String name, String color) {
+        public AppItem(String name, String price, String color) {
             this.name = name;
+            this.price = price;
             this.color = color;
         }
     }
 
+    @NonNull
     @Override
-    public int getCount() {
+    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_product, parent, false);
+        return new ProductViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+        AppItem item = list.get(position);
+        holder.tvName.setText(item.name);
+        holder.tvPrice.setText(item.price);
+        
+        // Dùng tạm màu nền thay cho ảnh sản phẩm để test
+        holder.imgProduct.setBackgroundColor(Color.parseColor(item.color));
+    }
+
+    @Override
+    public int getItemCount() {
         return list.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return list.get(i);
-    }
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+        TextView tvName, tvPrice;
+        View imgProduct;
 
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    // ViewHolder
-    static class ViewHolder {
-        TextView txtName;
-        TextView viewColor;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        ViewHolder holder;
-
-        if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.activity_listview, parent, false);
-
-            holder = new ViewHolder();
-            holder.txtName = convertView.findViewById(R.id.TextView);
-            holder.viewColor = convertView.findViewById(R.id.Color);
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+        public ProductViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvName = itemView.findViewById(R.id.tvProductName);
+            tvPrice = itemView.findViewById(R.id.tvProductPrice);
+            imgProduct = itemView.findViewById(R.id.imgProduct);
         }
-
-        AppItem item = list.get(position);
-
-        // set tên
-        holder.txtName.setText(item.name);
-
-        // chữ cái đầu
-        holder.viewColor.setText(item.name.substring(0, 1));
-
-        // màu nền
-        holder.viewColor.setBackgroundColor(Color.parseColor(item.color));
-
-        return convertView;
     }
 }

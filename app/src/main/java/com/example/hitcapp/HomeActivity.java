@@ -9,49 +9,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static final String[] items = {"Item1", "Item2", "Item3"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.btnHome), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            return insets;
-        });
 
-        ListView listView = findViewById(R.id.myList);
-
+        RecyclerView recyclerView = findViewById(R.id.rvProducts);
+        
         ArrayList<CustomAdapter.AppItem> list = new ArrayList<>();
 
-        list.add(new CustomAdapter.AppItem("Facebook", "#3b5998"));
-        list.add(new CustomAdapter.AppItem("YouTube", "#FF0000"));
-        list.add(new CustomAdapter.AppItem("TikTok", "#000000"));
-        list.add(new CustomAdapter.AppItem("Zalo", "#0068FF"));
-        list.add(new CustomAdapter.AppItem("Instagram", "#E1306C"));
-        list.add(new CustomAdapter.AppItem("Messenger", "#0084FF"));
-        list.add(new CustomAdapter.AppItem("WhatsApp", "#25D366"));
-        list.add(new CustomAdapter.AppItem("Telegram", "#229ED9"));
-        list.add(new CustomAdapter.AppItem("Spotify", "#1DB954"));
-        list.add(new CustomAdapter.AppItem("Netflix", "#E50914"));
-        list.add(new CustomAdapter.AppItem("Shopee", "#EE4D2D"));
-        list.add(new CustomAdapter.AppItem("Lazada", "#0F146D"));
-        list.add(new CustomAdapter.AppItem("Tiki", "#1A94FF"));
-        list.add(new CustomAdapter.AppItem("Google Maps", "#4285F4"));
-        list.add(new CustomAdapter.AppItem("Gmail", "#D44638"));
-        list.add(new CustomAdapter.AppItem("Chrome", "#F4B400"));
-        list.add(new CustomAdapter.AppItem("Photos", "#34A853"));
-        list.add(new CustomAdapter.AppItem("Drive", "#0F9D58"));
-        list.add(new CustomAdapter.AppItem("CapCut", "#000000"));
-        list.add(new CustomAdapter.AppItem("Canva", "#00C4CC"));
+        // Dữ liệu mẫu đồ Decor bàn làm việc
+        list.add(new CustomAdapter.AppItem("Kệ gỗ kê màn hình", "450.000đ", "#D2B48C"));
+        list.add(new CustomAdapter.AppItem("Đèn bàn Pixar", "290.000đ", "#2C3E50"));
+        list.add(new CustomAdapter.AppItem("Thảm trải bàn Felt", "150.000đ", "#7F8C8D"));
+        list.add(new CustomAdapter.AppItem("Chậu cây Terrarium", "120.000đ", "#27AE60"));
+        list.add(new CustomAdapter.AppItem("Giá đỡ điện thoại Nhôm", "85.000đ", "#BDC3C7"));
+        list.add(new CustomAdapter.AppItem("Loa Bluetooth Retro", "550.000đ", "#E67E22"));
+        list.add(new CustomAdapter.AppItem("Đồng hồ LED RGB", "320.000đ", "#8E44AD"));
+        list.add(new CustomAdapter.AppItem("Ống cắm bút Gốm", "65.000đ", "#ECF0F1"));
 
         CustomAdapter adapter = new CustomAdapter(this, list);
-        listView.setAdapter(adapter);
-
-
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setAdapter(adapter);
     }
 }
