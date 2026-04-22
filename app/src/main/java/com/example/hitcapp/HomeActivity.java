@@ -1,5 +1,6 @@
 package com.example.hitcapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -55,10 +56,24 @@ public class HomeActivity extends AppCompatActivity {
             });
         }
 
-        // Mở giỏ hàng từ Bottom Navigation
-        findViewById(R.id.btnCart).setOnClickListener(v -> {
-            android.content.Intent intent = new android.content.Intent(HomeActivity.this, CartActivity.class);
-            startActivity(intent);
+        // Điều hướng từ Bottom Navigation
+        setupNavigation();
+    }
+
+    private void setupNavigation() {
+        findViewById(R.id.btnProductsNav).setOnClickListener(v -> {
+            startActivity(new Intent(HomeActivity.this, ProductListActivity.class));
+            finish();
+        });
+
+        findViewById(R.id.btnCartNav).setOnClickListener(v -> {
+            startActivity(new Intent(HomeActivity.this, CartActivity.class));
+            finish();
+        });
+
+        findViewById(R.id.btnProfileNav).setOnClickListener(v -> {
+            startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+            finish();
         });
     }
 

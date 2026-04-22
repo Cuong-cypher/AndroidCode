@@ -18,6 +18,15 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
+        // KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP
+        android.content.SharedPreferences pref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        boolean isLoggedIn = pref.getBoolean("isLoggedIn", false);
+        if (isLoggedIn) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+            finish();
+            return;
+        }
+
         // Khai báo các View
         TextInputEditText txtEmail = findViewById(R.id.txtEmail);
         TextInputEditText txtPassword = findViewById(R.id.txtPassword);
@@ -45,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             // LẤY THÔNG TIN ĐÃ LƯU TỪ SharedPreferences
-            android.content.SharedPreferences pref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
             String savedEmail = pref.getString("email", "");
             String savedPass = pref.getString("password", "");
 
@@ -57,6 +65,9 @@ public class LoginActivity extends AppCompatActivity {
             boolean isDefaultUser = sEmail.equals("1@gmail.com") && sPass.equals("123");
 
             if (isRegisteredUser || isDefaultUser) {
+                // LƯU TRẠNG THÁI ĐĂNG NHẬP
+                pref.edit().putBoolean("isLoggedIn", true).apply();
+
                 Intent it = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(it);
                 finish();

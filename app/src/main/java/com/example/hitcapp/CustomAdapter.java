@@ -1,6 +1,8 @@
 package com.example.hitcapp;
 
+import android.app.Activity;
 import android.content.Context;
+import androidx.core.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +25,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
 
     public static class AppItem {
         String name;
+        String description;
         String price;
         int imageRes;
 
         public AppItem(String name, String price, int imageRes) {
             this.name = name;
+            this.price = price;
+            this.imageRes = imageRes;
+            this.description = "";
+        }
+
+        public AppItem(String name, String description, String price, int imageRes) {
+            this.name = name;
+            this.description = description;
             this.price = price;
             this.imageRes = imageRes;
         }
@@ -55,9 +66,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
             public void onClick(View v) {
                 android.content.Intent intent = new android.content.Intent(context, ProductDetailActivity.class);
                 intent.putExtra("PRODUCT_NAME", item.name);
+                intent.putExtra("PRODUCT_DESCRIPTION", item.description);
                 intent.putExtra("PRODUCT_PRICE", item.price);
                 intent.putExtra("PRODUCT_IMAGE", item.imageRes);
-                context.startActivity(intent);
+
+                if (context instanceof Activity) {
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            (Activity) context, holder.imgProduct, "product_image");
+                    context.startActivity(intent, options.toBundle());
+                } else {
+                    context.startActivity(intent);
+                }
             }
         });
     }

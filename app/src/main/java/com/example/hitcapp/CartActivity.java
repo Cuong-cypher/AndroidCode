@@ -42,6 +42,23 @@ public class CartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        setupNavigation();
+    }
+
+    private void setupNavigation() {
+        findViewById(R.id.btnHome).setOnClickListener(v -> {
+            startActivity(new android.content.Intent(this, HomeActivity.class));
+            finish();
+        });
+        findViewById(R.id.btnProducts).setOnClickListener(v -> {
+            startActivity(new android.content.Intent(this, ProductListActivity.class));
+            finish();
+        });
+        findViewById(R.id.btnProfile).setOnClickListener(v -> {
+            startActivity(new android.content.Intent(this, ProfileActivity.class));
+            finish();
+        });
     }
 
     private void updateTotalPrice() {

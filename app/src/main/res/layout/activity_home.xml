@@ -239,36 +239,45 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
 
             <ImageView
+                android:id="@+id/btnHomeNav"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="45dp"
                 android:layout_weight="1"
+                android:background="@drawable/bg_nav_item_selected"
+                android:padding="10dp"
                 android:src="@android:drawable/ic_menu_today"
                 app:tint="#4A90E2" />
 
             <ImageView
+                android:id="@+id/btnProductsNav"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="45dp"
                 android:layout_weight="1"
+                android:padding="10dp"
                 android:src="@android:drawable/ic_menu_search"
-                app:tint="#4A90E2" />
+                app:tint="#BDC3C7" />
 
             <ImageView
-                android:id="@+id/btnCart"
+                android:id="@+id/btnCartNav"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="45dp"
                 android:layout_weight="1"
+                android:padding="10dp"
                 android:src="@android:drawable/ic_menu_agenda"
-                app:tint="#4A90E2" />
+                app:tint="#BDC3C7" />
 
             <ImageView
+                android:id="@+id/btnProfileNav"
                 android:layout_width="0dp"
-                android:layout_height="24dp"
+                android:layout_height="45dp"
                 android:layout_weight="1"
+                android:padding="10dp"
                 android:src="@android:drawable/ic_menu_myplaces"
-                app:tint="#4A90E2" />
+                app:tint="#BDC3C7" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

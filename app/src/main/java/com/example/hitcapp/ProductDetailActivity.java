@@ -15,16 +15,19 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // Nhận dữ liệu từ Intent
         String name = getIntent().getStringExtra("PRODUCT_NAME");
+        String description = getIntent().getStringExtra("PRODUCT_DESCRIPTION");
         String price = getIntent().getStringExtra("PRODUCT_PRICE");
         int imageRes = getIntent().getIntExtra("PRODUCT_IMAGE", R.drawable.banner_sample);
 
         // Ánh xạ View
         TextView tvName = findViewById(R.id.tvProductName);
+        TextView tvDescription = findViewById(R.id.tvDescription);
         TextView tvPrice = findViewById(R.id.tvPrice);
         ImageView imgProduct = findViewById(R.id.imgProductLarge);
         
         // Hiển thị dữ liệu
         if (name != null) tvName.setText(name);
+        if (description != null) tvDescription.setText(description);
         if (price != null) tvPrice.setText(price);
         imgProduct.setImageResource(imageRes);
 
@@ -38,7 +41,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // Nút Thêm vào giỏ hàng
         findViewById(R.id.btnAddToCart).setOnClickListener(v -> {
-            CartManager.addToCart(new CustomAdapter.AppItem(name, price, imageRes));
+            CartManager.addToCart(new CustomAdapter.AppItem(name, description, price, imageRes));
             Toast.makeText(this, "Đã thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
             
             // Chuyển sang màn hình Giỏ hàng
