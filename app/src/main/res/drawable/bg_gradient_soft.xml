@@ -1,6 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Phối màu Analogous (Tương đồng): Deep Blue sang Soft Indigo -->
+    <!-- Tạo cảm giác bình yên, tin cậy và cao cấp -->
     <gradient
-        android:startColor="#4A90E2"
-        android:endColor="#8E44AD"
+        android:startColor="#2C3E50"
+        android:endColor="#4B79A1"
         android:angle="45"/>
 </shape>

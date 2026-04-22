@@ -16,6 +16,12 @@
             android:name=".HomeActivity"
             android:exported="true" />
         <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity

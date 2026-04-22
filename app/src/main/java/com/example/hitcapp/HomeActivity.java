@@ -1,42 +1,74 @@
 package com.example.hitcapp;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import androidx.activity.EdgeToEdge;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private CustomAdapter adapter;
+    private ArrayList<CustomAdapter.AppItem> productList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
         RecyclerView recyclerView = findViewById(R.id.rvProducts);
-        
-        ArrayList<CustomAdapter.AppItem> list = new ArrayList<>();
+        if (recyclerView != null) {
+            productList = new ArrayList<>();
 
-        // Dữ liệu mẫu đồ Decor bàn làm việc
-        list.add(new CustomAdapter.AppItem("Kệ gỗ kê màn hình", "450.000đ", "#D2B48C"));
-        list.add(new CustomAdapter.AppItem("Đèn bàn Pixar", "290.000đ", "#2C3E50"));
-        list.add(new CustomAdapter.AppItem("Thảm trải bàn Felt", "150.000đ", "#7F8C8D"));
-        list.add(new CustomAdapter.AppItem("Chậu cây Terrarium", "120.000đ", "#27AE60"));
-        list.add(new CustomAdapter.AppItem("Giá đỡ điện thoại Nhôm", "85.000đ", "#BDC3C7"));
-        list.add(new CustomAdapter.AppItem("Loa Bluetooth Retro", "550.000đ", "#E67E22"));
-        list.add(new CustomAdapter.AppItem("Đồng hồ LED RGB", "320.000đ", "#8E44AD"));
-        list.add(new CustomAdapter.AppItem("Ống cắm bút Gốm", "65.000đ", "#ECF0F1"));
+            // Danh sách sản phẩm thật từ ảnh đã lưu
+            productList.add(new CustomAdapter.AppItem("Bảng treo kính", "250.000 VND", R.drawable.bang_treo_kinh));
+            productList.add(new CustomAdapter.AppItem("Đèn Ngủ Momonga", "420.000 VND", R.drawable.den_ngu_momonga));
+            productList.add(new CustomAdapter.AppItem("Sưởi tay đa năng", "185.000 VND", R.drawable.suoi_tay_da_nang));
+            productList.add(new CustomAdapter.AppItem("Đèn heo Minecraft", "350.000 VND", R.drawable.den_heo_minecraft));
+            productList.add(new CustomAdapter.AppItem("Đèn Sứa Trang Trí", "590.000 VND", R.drawable.den_sua_trang_tri));
+            productList.add(new CustomAdapter.AppItem("Tranh đèn hoàng hôn", "280.000 VND", R.drawable.tranh_den_hoang_hon));
+            productList.add(new CustomAdapter.AppItem("Giá trang trí katana", "120.000 VND", R.drawable.gia_trang_tri_katana));
+            productList.add(new CustomAdapter.AppItem("Đồ chơi lắp ráp WallE", "450.000 VND", R.drawable.do_choi_lap_rap_walle));
 
-        CustomAdapter adapter = new CustomAdapter(this, list);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setAdapter(adapter);
+            adapter = new CustomAdapter(this, productList);
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            recyclerView.setAdapter(adapter);
+            recyclerView.setNestedScrollingEnabled(false);
+        }
+
+        EditText etSearch = findViewById(R.id.etSearch);
+        if (etSearch != null) {
+            etSearch.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    filter(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+        }
+
+        // Mở giỏ hàng từ Bottom Navigation
+        findViewById(R.id.btnCart).setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(HomeActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void filter(String text) {
+        ArrayList<CustomAdapter.AppItem> filteredList = new ArrayList<>();
+        for (CustomAdapter.AppItem item : productList) {
+            if (item.name.toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        adapter.filterList(filteredList);
     }
 }

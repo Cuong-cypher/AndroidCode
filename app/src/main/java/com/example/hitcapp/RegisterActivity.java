@@ -1,13 +1,15 @@
 package com.example.hitcapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -17,23 +19,42 @@ public class RegisterActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
 
-        // Nút Quay lại (MaterialButton)
+        TextInputEditText txtFullName = findViewById(R.id.txtFullName);
+        TextInputEditText txtEmail = findViewById(R.id.txtEmail);
+        TextInputEditText txtPassword = findViewById(R.id.txtPassword);
         MaterialButton btnBack = findViewById(R.id.btnBack);
+        TextView btnLogin = findViewById(R.id.btnLogin);
+        MaterialButton btnRegister = findViewById(R.id.btnRegister);
+
         btnBack.setOnClickListener(v -> finish());
 
-        // Chuyển sang trang Đăng nhập (Hiện tại là TextView)
-        TextView btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(v -> {
-            Intent it = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(it);
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             finish();
         });
 
-        // Nút Đăng ký (MaterialButton)
-        MaterialButton btnRegister = findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(v -> {
-            // Xử lý đăng ký ở đây (nếu cần)
-            finish(); // Đăng ký xong quay lại Login
+            String email = txtEmail.getText().toString().trim();
+            String password = txtPassword.getText().toString().trim();
+            String name = txtFullName.getText().toString().trim();
+
+            if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // LƯU TRỮ DỄ HIỂU NHẤT: SharedPreferences
+            SharedPreferences pref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("email", email);
+            editor.putString("password", password);
+            editor.putString("name", name);
+            editor.apply();
+
+            Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+            
+            // Quay lại trang đăng nhập
+            finish();
         });
     }
 }

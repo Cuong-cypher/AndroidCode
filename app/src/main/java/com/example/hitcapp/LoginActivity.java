@@ -2,14 +2,13 @@ package com.example.hitcapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,30 +18,48 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        // Nút Quay lại
+        // Khai báo các View
+        TextInputEditText txtEmail = findViewById(R.id.txtEmail);
+        TextInputEditText txtPassword = findViewById(R.id.txtPassword);
+        MaterialButton btnLogin = findViewById(R.id.btnLogin);
         MaterialButton btnBack = findViewById(R.id.btnBack);
+        TextView btnRegister = findViewById(R.id.btnRegister);
+
+        // Nút Quay lại
         btnBack.setOnClickListener(v -> finish());
 
-        // Chuyển sang trang Đăng ký (Hiện tại là TextView)
-        TextView btnRegister = findViewById(R.id.btnRegister);
+        // Chuyển sang trang Đăng ký
         btnRegister.setOnClickListener(v -> {
             Intent it = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(it);
         });
 
         // Xử lý Đăng nhập
-        MaterialButton btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(v -> {
-            EditText objEmail = findViewById(R.id.txtEmail);
-            String sEmail = objEmail.getText().toString();
+            String sEmail = txtEmail.getText().toString().trim();
+            String sPass = txtPassword.getText().toString().trim();
 
-            EditText objPass = findViewById(R.id.txtPassword);
-            String sPass = objPass.getText().toString();
+            if (sEmail.isEmpty() || sPass.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập Email và Mật khẩu", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            if (sEmail.equals("1@gmail.com") && sPass.equals("123")) {
+            // LẤY THÔNG TIN ĐÃ LƯU TỪ SharedPreferences
+            android.content.SharedPreferences pref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            String savedEmail = pref.getString("email", "");
+            String savedPass = pref.getString("password", "");
+
+            // Debug nhanh: Hiển thị thông tin đang lưu (Bạn có thể xóa sau khi test xong)
+            // Toast.makeText(this, "Đang lưu: " + savedEmail, Toast.LENGTH_SHORT).show();
+
+            // KIỂM TRA ĐĂNG NHẬP
+            boolean isRegisteredUser = !savedEmail.isEmpty() && sEmail.equalsIgnoreCase(savedEmail) && sPass.equals(savedPass);
+            boolean isDefaultUser = sEmail.equals("1@gmail.com") && sPass.equals("123");
+
+            if (isRegisteredUser || isDefaultUser) {
                 Intent it = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(it);
-                finish(); // Đăng nhập xong thì đóng luôn trang Login
+                finish();
             } else {
                 Toast.makeText(LoginActivity.this, "Email hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
             }

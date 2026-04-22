@@ -1,11 +1,12 @@
 package com.example.hitcapp;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -23,12 +24,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
     public static class AppItem {
         String name;
         String price;
-        String color;
+        int imageRes;
 
-        public AppItem(String name, String price, String color) {
+        public AppItem(String name, String price, int imageRes) {
             this.name = name;
             this.price = price;
-            this.color = color;
+            this.imageRes = imageRes;
         }
     }
 
@@ -45,8 +46,20 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
         holder.tvName.setText(item.name);
         holder.tvPrice.setText(item.price);
         
-        // Dùng tạm màu nền thay cho ảnh sản phẩm để test
-        holder.imgProduct.setBackgroundColor(Color.parseColor(item.color));
+        // Hiển thị ảnh sản phẩm thật
+        holder.imgProduct.setImageResource(item.imageRes);
+
+        // Xử lý click vào sản phẩm để mở Detail
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.content.Intent intent = new android.content.Intent(context, ProductDetailActivity.class);
+                intent.putExtra("PRODUCT_NAME", item.name);
+                intent.putExtra("PRODUCT_PRICE", item.price);
+                intent.putExtra("PRODUCT_IMAGE", item.imageRes);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -54,9 +67,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
         return list.size();
     }
 
+    public void filterList(ArrayList<AppItem> filteredList) {
+        this.list = filteredList;
+        notifyDataSetChanged();
+    }
+
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvPrice;
-        View imgProduct;
+        ImageView imgProduct;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);

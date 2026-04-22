@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_soft">
+
+    <!-- Navigation Buttons -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBack"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        android:text="‹"
+        android:textColor="#FFFFFF"
+        android:textSize="32sp"
+        app:backgroundTint="#26FFFFFF"
+        app:cornerRadius="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#4DFFFFFF"
+        app:strokeWidth="1dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnFav"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="24dp"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        app:backgroundTint="#26FFFFFF"
+        app:cornerRadius="16dp"
+        app:icon="@android:drawable/btn_star_big_off"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#4DFFFFFF"
+        app:strokeWidth="1dp" />
+
+    <!-- Info Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="130dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="40dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_card_premium"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="16dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="16dp"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                app:layout_constraintBottom_toTopOf="@+id/btnAddToCart"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="32dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <!-- Product Image in a "Frame" -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="320dp"
+                        android:layout_marginBottom="24dp"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="8dp"
+                        app:strokeColor="#1A000000"
+                        app:strokeWidth="1dp">
+
+                        <ImageView
+                            android:id="@+id/imgProductLarge"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/banner_sample" />
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/tvCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:alpha="0.6"
+                        android:letterSpacing="0.1"
+                        android:text="SẢN PHẨM"
+                        android:textColor="#333333"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvProductName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="2"
+                        android:text="Kệ Gỗ Tối Giản Nordic"
+                        android:textColor="#222222"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center"
+                        android:text="550.000 VND"
+                        android:textColor="#D32F2F"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="3dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="24dp"
+                        android:alpha="0.1"
+                        android:background="#000000" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="Thông tin sản phẩm"
+                        android:textColor="#222222"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:lineSpacingExtra="6dp"
+                        android:text="Kệ gỗ được chế tác từ gỗ sồi tự nhiên, mang phong cách Minimalism giúp tối ưu hóa không gian làm việc của bạn. Thiết kế tinh tế, dễ dàng lắp đặt và phù hợp với mọi không gian nội thất hiện đại."
+                        android:textColor="#666666"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:text="Gợi ý cho bạn"
+                        android:textColor="#222222"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:clipToPadding="false"
+                        android:clipChildren="false"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingBottom="16dp"
+                            android:clipChildren="false"
+                            android:clipToPadding="false">
+
+                            <include layout="@layout/item_product_small" />
+
+                            <include layout="@layout/item_product_small" />
+
+                            <include layout="@layout/item_product_small" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <!-- Action Button (Pinned to bottom) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddToCart"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="8dp"
+                android:text="THÊM VÀO GIỎ HÀNG"
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="#FFD700"
+                app:cornerRadius="20dp"
+                app:icon="@android:drawable/ic_input_add"
+                app:iconGravity="textStart"
+                app:iconPadding="12dp"
+                app:iconTint="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:strokeColor="#000000"
+                app:strokeWidth="2dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
