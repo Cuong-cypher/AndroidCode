@@ -24,16 +24,18 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
     }
 
     public static class AppItem {
-        String name;
-        String description;
-        String price;
-        int imageRes;
+        public String name;
+        public String description;
+        public String price;
+        public int imageRes;
+        public int quantity = 1;
 
         public AppItem(String name, String price, int imageRes) {
             this.name = name;
             this.price = price;
             this.imageRes = imageRes;
             this.description = "";
+            this.quantity = 1;
         }
 
         public AppItem(String name, String description, String price, int imageRes) {
@@ -41,6 +43,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
             this.description = description;
             this.price = price;
             this.imageRes = imageRes;
+            this.quantity = 1;
         }
     }
 

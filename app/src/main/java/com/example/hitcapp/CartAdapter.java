@@ -39,6 +39,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.tvName.setText(item.name);
         holder.tvPrice.setText(item.price);
         holder.imgProduct.setImageResource(item.imageRes);
+        holder.etQuantity.setText(String.valueOf(item.quantity));
+
+        holder.btnPlus.setOnClickListener(v -> {
+            item.quantity++;
+            holder.etQuantity.setText(String.valueOf(item.quantity));
+            if (listener != null) listener.onCountChanged();
+        });
+
+        holder.btnMinus.setOnClickListener(v -> {
+            if (item.quantity > 1) {
+                item.quantity--;
+                holder.etQuantity.setText(String.valueOf(item.quantity));
+                if (listener != null) listener.onCountChanged();
+            }
+        });
 
         holder.btnRemove.setOnClickListener(v -> {
             CartManager.removeItem(position);
@@ -57,6 +72,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public static class CartViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvPrice;
         ImageView imgProduct, btnRemove;
+        android.widget.EditText etQuantity;
+        View btnPlus, btnMinus;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +81,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             tvPrice = itemView.findViewById(R.id.tvCartPrice);
             imgProduct = itemView.findViewById(R.id.imgCartItem);
             btnRemove = itemView.findViewById(R.id.btnRemove);
+            etQuantity = itemView.findViewById(R.id.etQuantity);
+            btnPlus = itemView.findViewById(R.id.btnPlus);
+            btnMinus = itemView.findViewById(R.id.btnMinus);
         }
     }
 }

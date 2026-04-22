@@ -22,6 +22,13 @@ public class ProfileActivity extends AppCompatActivity {
             finish();
         });
 
+        // Nút Back - Quay về Home
+        findViewById(R.id.btnBackProfile).setOnClickListener(v -> {
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+
         setupNavigation();
     }
 

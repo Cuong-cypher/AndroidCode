@@ -56,11 +56,19 @@ public class HomeActivity extends AppCompatActivity {
             });
         }
 
-        // Điều hướng từ Bottom Navigation
+        // Điều hướng từ Bottom Navigation và Top Bar
         setupNavigation();
     }
 
     private void setupNavigation() {
+        // Nút Profile ở Top Bar
+        android.view.View btnUserProfile = findViewById(R.id.btnUserProfile);
+        if (btnUserProfile != null) {
+            btnUserProfile.setOnClickListener(v -> {
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+            });
+        }
+
         findViewById(R.id.btnProductsNav).setOnClickListener(v -> {
             startActivity(new Intent(HomeActivity.this, ProductListActivity.class));
             finish();
@@ -68,7 +76,6 @@ public class HomeActivity extends AppCompatActivity {
 
         findViewById(R.id.btnCartNav).setOnClickListener(v -> {
             startActivity(new Intent(HomeActivity.this, CartActivity.class));
-            finish();
         });
 
         findViewById(R.id.btnProfileNav).setOnClickListener(v -> {

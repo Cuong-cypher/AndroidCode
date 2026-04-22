@@ -14,7 +14,8 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView rvCart;
     private CartAdapter adapter;
     private TextView tvTotalPrice;
-    private MaterialButton btnBack, btnCheckout;
+    private android.view.View btnBack;
+    private MaterialButton btnCheckout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,11 @@ public class CartActivity extends AppCompatActivity {
 
         updateTotalPrice();
 
-        btnBack.setOnClickListener(v -> finish());
+        btnBack.setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(this, HomeActivity.class);
+            intent.setFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
 
         btnCheckout.setOnClickListener(v -> {
             if (CartManager.getCartList().isEmpty()) {

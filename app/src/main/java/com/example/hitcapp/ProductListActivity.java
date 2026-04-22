@@ -30,6 +30,13 @@ public class ProductListActivity extends AppCompatActivity {
         rv.setLayoutManager(new GridLayoutManager(this, 2));
         rv.setAdapter(adapter);
 
+        // Nút Back - Quay về Home thay vì đóng Activity
+        findViewById(R.id.btnBackProducts).setOnClickListener(v -> {
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+
         setupNavigation();
     }
 

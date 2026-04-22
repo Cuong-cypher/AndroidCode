@@ -51,6 +51,7 @@
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnUserProfile"
             android:layout_width="45dp"
             android:layout_height="45dp"
             app:cardBackgroundColor="#26FFFFFF"
