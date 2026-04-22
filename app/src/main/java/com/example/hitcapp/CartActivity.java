@@ -38,9 +38,8 @@ public class CartActivity extends AppCompatActivity {
             if (CartManager.getCartList().isEmpty()) {
                 Toast.makeText(this, "Giỏ hàng đang trống!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "Cảm ơn bạn đã đặt hàng!", Toast.LENGTH_LONG).show();
-                CartManager.getCartList().clear();
-                finish();
+                android.content.Intent intent = new android.content.Intent(CartActivity.this, CheckoutActivity.class);
+                startActivity(intent);
             }
         });
     }
