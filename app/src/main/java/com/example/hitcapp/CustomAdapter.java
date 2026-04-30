@@ -27,14 +27,25 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
         public String name;
         public String description;
         public String price;
-        public int imageRes;
+        public int imageRes;      // Dùng cho ảnh trong máy (local)
+        public String imageUrl;   // Dùng cho ảnh từ API (link)
         public int quantity = 1;
 
+        // Constructor cho ảnh local
         public AppItem(String name, String price, int imageRes) {
             this.name = name;
             this.price = price;
             this.imageRes = imageRes;
             this.description = "";
+            this.quantity = 1;
+        }
+
+        // Constructor cho ảnh API
+        public AppItem(String name, String description, String price, String imageUrl) {
+            this.name = name;
+            this.description = description;
+            this.price = price;
+            this.imageUrl = imageUrl;
             this.quantity = 1;
         }
 
@@ -60,8 +71,15 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
         holder.tvName.setText(item.name);
         holder.tvPrice.setText(item.price);
         
-        // Hiển thị ảnh sản phẩm thật
-        holder.imgProduct.setImageResource(item.imageRes);
+        // Load ảnh: Ưu tiên imageUrl từ API dùng Glide, nếu không có thì dùng imageRes local
+        if (item.imageUrl != null && !item.imageUrl.isEmpty()) {
+            com.bumptech.glide.Glide.with(context)
+                .load(item.imageUrl)
+                .placeholder(R.drawable.banner_sample)
+                .into(holder.imgProduct);
+        } else {
+            holder.imgProduct.setImageResource(item.imageRes);
+        }
 
         // Xử lý click vào sản phẩm để mở Detail
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +89,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
                 intent.putExtra("PRODUCT_NAME", item.name);
                 intent.putExtra("PRODUCT_DESCRIPTION", item.description);
                 intent.putExtra("PRODUCT_PRICE", item.price);
+                
+                // Gửi cả ID ảnh local và URL ảnh mạng sang màn hình Detail
                 intent.putExtra("PRODUCT_IMAGE", item.imageRes);
+                intent.putExtra("PRODUCT_IMAGE_URL", item.imageUrl);
 
                 if (context instanceof Activity) {
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(

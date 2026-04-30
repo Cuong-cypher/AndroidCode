@@ -2,12 +2,21 @@ package com.example.hitcapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductListActivity extends AppCompatActivity {
+
+    private CustomAdapter adapter;
+    private ArrayList<CustomAdapter.AppItem> productList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,20 +24,13 @@ public class ProductListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_list);
 
         RecyclerView rv = findViewById(R.id.rvAllProducts);
-        // Lấy danh sách sản phẩm nổi bật từ Home sang
-        ArrayList<CustomAdapter.AppItem> list = new ArrayList<>();
-        list.add(new CustomAdapter.AppItem("Bảng treo kính", "Phụ kiện trang trí hiện đại", "250.000 VND", R.drawable.bang_treo_kinh));
-        list.add(new CustomAdapter.AppItem("Đèn Ngủ Momonga", "Ánh sáng vàng ấm áp cho phòng ngủ", "420.000 VND", R.drawable.den_ngu_momonga));
-        list.add(new CustomAdapter.AppItem("Sưởi tay đa năng", "Sưởi ấm nhanh chóng, tích hợp sạc dự phòng", "185.000 VND", R.drawable.suoi_tay_da_nang));
-        list.add(new CustomAdapter.AppItem("Đèn heo Minecraft", "Đèn ngủ trang trí phong cách pixel", "350.000 VND", R.drawable.den_heo_minecraft));
-        list.add(new CustomAdapter.AppItem("Đèn Sứa Trang Trí", "Tạo không gian lung linh huyền ảo", "590.000 VND", R.drawable.den_sua_trang_tri));
-        list.add(new CustomAdapter.AppItem("Tranh đèn hoàng hôn", "Ánh sáng hoàng hôn lãng mạn", "280.000 VND", R.drawable.tranh_den_hoang_hon));
-        list.add(new CustomAdapter.AppItem("Giá trang trí katana", "Kệ trưng bày gỗ cao cấp", "120.000 VND", R.drawable.gia_trang_tri_katana));
-        list.add(new CustomAdapter.AppItem("Đồ chơi lắp ráp WallE", "Mô hình lắp ráp thông minh", "450.000 VND", R.drawable.do_choi_lap_rap_walle));
-
-        CustomAdapter adapter = new CustomAdapter(this, list);
+        productList = new ArrayList<>();
+        adapter = new CustomAdapter(this, productList);
         rv.setLayoutManager(new GridLayoutManager(this, 2));
         rv.setAdapter(adapter);
+
+        // Gọi API lấy sản phẩm
+        fetchProductsFromApi();
 
         // Nút Back - Quay về Home thay vì đóng Activity
         findViewById(R.id.btnBackProducts).setOnClickListener(v -> {
@@ -40,18 +42,51 @@ public class ProductListActivity extends AppCompatActivity {
         setupNavigation();
     }
 
+    private void fetchProductsFromApi() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://dummyjson.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiService apiService = retrofit.create(ApiService.class);
+        apiService.getProducts().enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    productList.clear();
+                    for (ProductResponse.Product p : response.body().products) {
+                        String formattedPrice = String.format("$%.2f", p.price);
+                        productList.add(new CustomAdapter.AppItem(p.title, p.description, formattedPrice, p.thumbnail));
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                Toast.makeText(ProductListActivity.this, "Không thể tải sản phẩm từ API", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void setupNavigation() {
         findViewById(R.id.btnHome).setOnClickListener(v -> {
-            startActivity(new Intent(this, HomeActivity.class));
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         });
         findViewById(R.id.btnCart).setOnClickListener(v -> {
-            startActivity(new Intent(this, CartActivity.class));
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            Intent intent = new Intent(this, CartActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         });
         findViewById(R.id.btnProfile).setOnClickListener(v -> {
-            startActivity(new Intent(this, ProfileActivity.class));
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            Intent intent = new Intent(this, ProfileActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         });
     }
 }

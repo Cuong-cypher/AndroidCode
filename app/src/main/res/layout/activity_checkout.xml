@@ -143,47 +143,30 @@
                 android:id="@+id/rgPayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                android:background="#1AFFFFFF"
+                android:padding="8dp">
 
-                <com.google.android.material.card.MaterialCardView
+                <RadioButton
+                    android:id="@+id/rbCod"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="#26FFFFFF"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="#4DFFFFFF"
-                    app:strokeWidth="1dp">
+                    android:buttonTint="#FFFFFF"
+                    android:checked="true"
+                    android:padding="12dp"
+                    android:text="Thanh toán khi nhận hàng (COD)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
 
-                    <RadioButton
-                        android:id="@+id/rbCod"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#FFFFFF"
-                        android:checked="true"
-                        android:padding="12dp"
-                        android:text="Thanh toán khi nhận hàng (COD)"
-                        android:textColor="#FFFFFF" />
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
+                <RadioButton
+                    android:id="@+id/rbBank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:cardBackgroundColor="#26FFFFFF"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:strokeColor="#4DFFFFFF"
-                    app:strokeWidth="1dp">
-
-                    <RadioButton
-                        android:id="@+id/rbBank"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="#FFFFFF"
-                        android:padding="12dp"
-                        android:text="Chuyển khoản ngân hàng"
-                        android:textColor="#FFFFFF" />
-                </com.google.android.material.card.MaterialCardView>
+                    android:buttonTint="#FFFFFF"
+                    android:padding="12dp"
+                    android:text="Chuyển khoản ngân hàng"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
             </RadioGroup>
 
             <TextView

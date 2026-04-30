@@ -5,8 +5,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.Locale;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProductDetailActivity extends AppCompatActivity {
+
+    private RecyclerView rvSuggestions;
+    private SuggestionAdapter suggestionAdapter;
+    private ArrayList<CustomAdapter.AppItem> suggestionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +31,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         String description = getIntent().getStringExtra("PRODUCT_DESCRIPTION");
         String price = getIntent().getStringExtra("PRODUCT_PRICE");
         int imageRes = getIntent().getIntExtra("PRODUCT_IMAGE", R.drawable.banner_sample);
+        String imageUrl = getIntent().getStringExtra("PRODUCT_IMAGE_URL");
 
         // Ánh xạ View
         TextView tvName = findViewById(R.id.tvProductName);
@@ -29,7 +43,16 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (name != null) tvName.setText(name);
         if (description != null) tvDescription.setText(description);
         if (price != null) tvPrice.setText(price);
-        imgProduct.setImageResource(imageRes);
+        
+        // Hiển thị ảnh: Ưu tiên link từ API, nếu không có dùng ảnh local
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            com.bumptech.glide.Glide.with(this)
+                .load(imageUrl)
+                .placeholder(R.drawable.banner_sample)
+                .into(imgProduct);
+        } else {
+            imgProduct.setImageResource(imageRes);
+        }
 
         // Nút quay lại
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
@@ -41,12 +64,53 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // Nút Thêm vào giỏ hàng
         findViewById(R.id.btnAddToCart).setOnClickListener(v -> {
-            CartManager.addToCart(new CustomAdapter.AppItem(name, description, price, imageRes));
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                CartManager.addToCart(new CustomAdapter.AppItem(name, description, price, imageUrl));
+            } else {
+                CartManager.addToCart(new CustomAdapter.AppItem(name, description, price, imageRes));
+            }
             Toast.makeText(this, "Đã thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
             
             // Chuyển sang màn hình Giỏ hàng
             android.content.Intent intent = new android.content.Intent(ProductDetailActivity.this, CartActivity.class);
             startActivity(intent);
+        });
+
+        // Thiết lập sản phẩm gợi ý
+        rvSuggestions = findViewById(R.id.rvSuggestions);
+        suggestionList = new ArrayList<>();
+        suggestionAdapter = new SuggestionAdapter(this, suggestionList);
+        rvSuggestions.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvSuggestions.setAdapter(suggestionAdapter);
+
+        fetchSuggestions();
+    }
+
+    private void fetchSuggestions() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://dummyjson.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ApiService apiService = retrofit.create(ApiService.class);
+        apiService.getProducts().enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    suggestionList.clear();
+                    int count = 0;
+                    for (ProductResponse.Product p : response.body().products) {
+                        if (count >= 10) break;
+                        String formattedPrice = String.format(Locale.US, "$%.2f", p.price);
+                        suggestionList.add(new CustomAdapter.AppItem(p.title, p.description, formattedPrice, p.thumbnail));
+                        count++;
+                    }
+                    suggestionAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {}
         });
     }
 }

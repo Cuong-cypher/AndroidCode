@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -53,22 +54,41 @@ public class CartActivity extends AppCompatActivity {
 
     private void setupNavigation() {
         findViewById(R.id.btnHome).setOnClickListener(v -> {
-            startActivity(new android.content.Intent(this, HomeActivity.class));
-            finish();
+            android.content.Intent intent = new android.content.Intent(this, HomeActivity.class);
+            intent.addFlags(android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         });
         findViewById(R.id.btnProducts).setOnClickListener(v -> {
-            startActivity(new android.content.Intent(this, ProductListActivity.class));
-            finish();
+            android.content.Intent intent = new android.content.Intent(this, ProductListActivity.class);
+            intent.addFlags(android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         });
         findViewById(R.id.btnProfile).setOnClickListener(v -> {
-            startActivity(new android.content.Intent(this, ProfileActivity.class));
-            finish();
+            android.content.Intent intent = new android.content.Intent(this, ProfileActivity.class);
+            intent.addFlags(android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         });
     }
 
     private void updateTotalPrice() {
         double total = CartManager.getTotalPrice();
-        DecimalFormat formatter = new DecimalFormat("#,###");
-        tvTotalPrice.setText(formatter.format(total).replace(",", ".") + " VND");
+        boolean isUsd = false;
+        
+        for (CustomAdapter.AppItem item : CartManager.getCartList()) {
+            if (item.price.contains("$")) {
+                isUsd = true;
+                break;
+            }
+        }
+
+        if (isUsd) {
+            tvTotalPrice.setText(String.format(Locale.US, "$%.2f", total));
+        } else {
+            DecimalFormat formatter = new DecimalFormat("#,###");
+            tvTotalPrice.setText(formatter.format(total).replace(",", ".") + " VND");
+        }
     }
 }

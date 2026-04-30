@@ -11,9 +11,16 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Hiển thị tên người dùng từ SharedPreferences
+        android.widget.TextView tvProfileName = findViewById(R.id.tvProfileName);
+        android.content.SharedPreferences pref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String name = pref.getString("name", "Người dùng");
+        if (tvProfileName != null) {
+            tvProfileName.setText(name);
+        }
+
         findViewById(R.id.btnLogout).setOnClickListener(v -> {
             // XÓA TRẠNG THÁI ĐĂNG NHẬP
-            android.content.SharedPreferences pref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
             pref.edit().putBoolean("isLoggedIn", false).apply();
 
             Intent intent = new Intent(this, LoginActivity.class);
@@ -33,8 +40,23 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setupNavigation() {
-        findViewById(R.id.btnHome).setOnClickListener(v -> startActivity(new Intent(this, HomeActivity.class)));
-        findViewById(R.id.btnProducts).setOnClickListener(v -> startActivity(new Intent(this, ProductListActivity.class)));
-        findViewById(R.id.btnCart).setOnClickListener(v -> startActivity(new Intent(this, CartActivity.class)));
+        findViewById(R.id.btnHome).setOnClickListener(v -> {
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        });
+        findViewById(R.id.btnProducts).setOnClickListener(v -> {
+            Intent intent = new Intent(this, ProductListActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        });
+        findViewById(R.id.btnCart).setOnClickListener(v -> {
+            Intent intent = new Intent(this, CartActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+        });
     }
 }

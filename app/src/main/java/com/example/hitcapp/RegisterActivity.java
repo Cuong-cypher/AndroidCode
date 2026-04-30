@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -43,7 +44,6 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // LƯU TRỮ DỄ HIỂU NHẤT: SharedPreferences
             SharedPreferences pref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.putString("email", email);
@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
             editor.apply();
 
             Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-            
+
             // Quay lại trang đăng nhập
             finish();
         });

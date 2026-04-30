@@ -28,12 +28,25 @@ public class CartManager {
     public static double getTotalPrice() {
         double total = 0;
         for (CustomAdapter.AppItem item : cartList) {
-            String priceStr = item.price.replace(".", "").replace(" VND", "").trim();
             try {
-                double unitPrice = Double.parseDouble(priceStr);
-                total += unitPrice * item.quantity;
-            } catch (Exception e) {}
+                String priceStr = item.price;
+                if (priceStr.contains("$")) {
+                    // USD: Giữ lại dấu chấm thập phân, chỉ xóa dấu phẩy và ký hiệu $
+                    priceStr = priceStr.replace("$", "").replace(",", "").trim();
+                    total += Double.parseDouble(priceStr) * item.quantity;
+                } else {
+                    // VND: Xóa dấu chấm (ngăn cách hàng nghìn) và chữ VND
+                    priceStr = priceStr.replace(" VND", "").replace(".", "").replace(",", "").trim();
+                    total += Double.parseDouble(priceStr) * item.quantity;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return total;
+    }
+
+    public static void clearCart() {
+        cartList.clear();
     }
 }

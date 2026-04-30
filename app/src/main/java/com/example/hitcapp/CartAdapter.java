@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
@@ -38,7 +39,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         CustomAdapter.AppItem item = list.get(position);
         holder.tvName.setText(item.name);
         holder.tvPrice.setText(item.price);
-        holder.imgProduct.setImageResource(item.imageRes);
+        
+        if (item.imageUrl != null && !item.imageUrl.isEmpty()) {
+            Glide.with(context)
+                .load(item.imageUrl)
+                .placeholder(R.drawable.banner_sample)
+                .into(holder.imgProduct);
+        } else {
+            holder.imgProduct.setImageResource(item.imageRes);
+        }
+
         holder.etQuantity.setText(String.valueOf(item.quantity));
 
         holder.btnPlus.setOnClickListener(v -> {
