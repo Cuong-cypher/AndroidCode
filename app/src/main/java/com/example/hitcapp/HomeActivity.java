@@ -22,11 +22,22 @@ public class HomeActivity extends AppCompatActivity {
 
     private CustomAdapter adapter;
     private ArrayList<CustomAdapter.AppItem> productList;
+    private RecyclerView rvCategories;
+    private CategoryAdapter categoryAdapter;
+    private ArrayList<String> categoryList;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // Khởi tạo Retrofit dùng chung
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://dummyjson.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        apiService = retrofit.create(ApiService.class);
 
         // Hiển thị tên người dùng từ SharedPreferences
         TextView tvWelcome = findViewById(R.id.tvWelcome);
@@ -36,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
             tvWelcome.setText("Chào, " + name + "!");
         }
 
+        // Thiết lập RecyclerView Sản phẩm
         RecyclerView recyclerView = findViewById(R.id.rvProducts);
         if (recyclerView != null) {
             productList = new ArrayList<>();
@@ -44,8 +56,20 @@ public class HomeActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
             recyclerView.setNestedScrollingEnabled(false);
 
-            // Gọi API lấy sản phẩm từ DummyJSON
             fetchProductsFromApi();
+        }
+
+        // Thiết lập RecyclerView Danh mục
+        rvCategories = findViewById(R.id.rvCategories);
+        if (rvCategories != null) {
+            categoryList = new ArrayList<>();
+            categoryAdapter = new CategoryAdapter(this, categoryList, category -> {
+                Intent intent = new Intent(HomeActivity.this, ProductListActivity.class);
+                intent.putExtra("CATEGORY", category);
+                startActivity(intent);
+            });
+            rvCategories.setAdapter(categoryAdapter);
+            fetchCategories();
         }
 
         EditText etSearch = findViewById(R.id.etSearch);
@@ -68,20 +92,25 @@ public class HomeActivity extends AppCompatActivity {
         setupNavigation();
     }
 
-    private void fetchProductsFromApi() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://dummyjson.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Cập nhật lại tên người dùng ở màn hình Home mỗi khi quay lại
+        TextView tvWelcome = findViewById(R.id.tvWelcome);
+        if (tvWelcome != null) {
+            android.content.SharedPreferences pref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            String name = pref.getString("name", "Góc Tìm Tòi");
+            tvWelcome.setText("Chào, " + name + "!");
+        }
+    }
 
-        ApiService apiService = retrofit.create(ApiService.class);
+    private void fetchProductsFromApi() {
         apiService.getProducts().enqueue(new Callback<ProductResponse>() {
             @Override
             public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     productList.clear();
                     for (ProductResponse.Product p : response.body().products) {
-                        // Map dữ liệu từ API về form AppItem của bạn
                         String formattedPrice = String.format(java.util.Locale.US, "$%.2f", p.price);
                         productList.add(new CustomAdapter.AppItem(p.title, p.description, formattedPrice, p.thumbnail));
                     }
@@ -91,10 +120,50 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ProductResponse> call, Throwable t) {
-                Toast.makeText(HomeActivity.this, "Không thể tải sản phẩm từ API", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "Không thể tải sản phẩm", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private void fetchCategories() {
+        apiService.getCategories().enqueue(new Callback<java.util.List<ApiService.CategoryItem>>() {
+            @Override
+            public void onResponse(Call<java.util.List<ApiService.CategoryItem>> call, Response<java.util.List<ApiService.CategoryItem>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    categoryList.clear();
+                    for (ApiService.CategoryItem item : response.body()) {
+                        categoryList.add(item.slug);
+                    }
+                    categoryAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<java.util.List<ApiService.CategoryItem>> call, Throwable t) {}
+        });
+    }
+
+    private void fetchProductsByCategory(String category) {
+        apiService.getProductsByCategory(category).enqueue(new Callback<ProductResponse>() {
+            @Override
+            public void onResponse(Call<ProductResponse> call, Response<ProductResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    productList.clear();
+                    for (ProductResponse.Product p : response.body().products) {
+                        String formattedPrice = String.format(java.util.Locale.US, "$%.2f", p.price);
+                        productList.add(new CustomAdapter.AppItem(p.title, p.description, formattedPrice, p.thumbnail));
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductResponse> call, Throwable t) {
+                Toast.makeText(HomeActivity.this, "Không thể tải sản phẩm theo danh mục", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void setupNavigation() {
         // Nút Profile ở Top Bar

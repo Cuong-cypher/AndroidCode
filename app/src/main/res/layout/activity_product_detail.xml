@@ -80,7 +80,7 @@
                 android:scrollbars="none"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                app:layout_constraintBottom_toTopOf="@+id/btnAddToCart"
+                app:layout_constraintBottom_toTopOf="@+id/llActions"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
@@ -193,26 +193,51 @@
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
-            <!-- Action Button (Pinned to bottom) -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddToCart"
+            <!-- Action Buttons (Pinned to bottom) -->
+            <LinearLayout
+                android:id="@+id/llActions"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="THÊM VÀO GIỎ HÀNG"
-                android:textAllCaps="true"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:backgroundTint="#FFD700"
-                app:cornerRadius="20dp"
-                app:icon="@android:drawable/ic_input_add"
-                app:iconGravity="textStart"
-                app:iconPadding="12dp"
-                app:iconTint="#000000"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:strokeColor="#000000"
-                app:strokeWidth="2dp" />
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddToCart"
+                    android:layout_width="0dp"
+                    android:layout_height="64dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="GIỎ HÀNG"
+                    android:textAllCaps="true"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#FFFFFF"
+                    app:cornerRadius="20dp"
+                    app:icon="@android:drawable/ic_input_add"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp"
+                    app:iconTint="#000000"
+                    app:strokeColor="#000000"
+                    app:strokeWidth="2dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBuyNow"
+                    android:layout_width="0dp"
+                    android:layout_height="64dp"
+                    android:layout_weight="1.2"
+                    android:text="MUA NGAY"
+                    android:textAllCaps="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#000000"
+                    app:cornerRadius="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

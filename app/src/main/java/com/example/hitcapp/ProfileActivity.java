@@ -36,6 +36,12 @@ public class ProfileActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Nút Lịch sử đơn hàng
+        findViewById(R.id.btnOrderHistory).setOnClickListener(v -> {
+            Intent intent = new Intent(this, OrderHistoryActivity.class);
+            startActivity(intent);
+        });
+
         setupNavigation();
     }
 

@@ -49,6 +49,21 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnClearCart).setOnClickListener(v -> {
+            if (CartManager.getCartList().isEmpty()) return;
+            new androidx.appcompat.app.AlertDialog.Builder(this)
+                    .setTitle("Xác nhận xóa")
+                    .setMessage("Bạn có muốn xóa toàn bộ sản phẩm trong giỏ hàng không?")
+                    .setPositiveButton("Xóa", (dialog, which) -> {
+                        CartManager.getCartList().clear();
+                        adapter.notifyDataSetChanged();
+                        updateTotalPrice();
+                        Toast.makeText(this, "Đã xóa giỏ hàng", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("Hủy", null)
+                    .show();
+        });
+
         setupNavigation();
     }
 

@@ -49,4 +49,25 @@ public class CartManager {
     public static void clearCart() {
         cartList.clear();
     }
+
+    public static void saveOrder(android.content.Context context) {
+        if (cartList.isEmpty()) return;
+
+        android.content.SharedPreferences pref = context.getSharedPreferences("Orders", android.content.Context.MODE_PRIVATE);
+        String existingOrders = pref.getString("order_list", "[]");
+
+        try {
+            com.google.gson.Gson gson = new com.google.gson.Gson();
+            java.lang.reflect.Type type = new com.google.gson.reflect.TypeToken<java.util.ArrayList<java.util.ArrayList<CustomAdapter.AppItem>>>(){}.getType();
+            java.util.ArrayList<java.util.ArrayList<CustomAdapter.AppItem>> allOrders = gson.fromJson(existingOrders, type);
+            if (allOrders == null) allOrders = new java.util.ArrayList<>();
+
+            // Thêm bản sao của giỏ hàng hiện tại vào đầu danh sách
+            allOrders.add(0, new java.util.ArrayList<>(cartList));
+
+            pref.edit().putString("order_list", gson.toJson(allOrders)).apply();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

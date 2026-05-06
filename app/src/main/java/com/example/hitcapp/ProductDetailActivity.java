@@ -64,15 +64,28 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // Nút Thêm vào giỏ hàng
         findViewById(R.id.btnAddToCart).setOnClickListener(v -> {
+            CustomAdapter.AppItem currentItem;
             if (imageUrl != null && !imageUrl.isEmpty()) {
-                CartManager.addToCart(new CustomAdapter.AppItem(name, description, price, imageUrl));
+                currentItem = new CustomAdapter.AppItem(name, description, price, imageUrl);
             } else {
-                CartManager.addToCart(new CustomAdapter.AppItem(name, description, price, imageRes));
+                currentItem = new CustomAdapter.AppItem(name, description, price, imageRes);
             }
+            CartManager.addToCart(currentItem);
             Toast.makeText(this, "Đã thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
+        });
+
+        // Nút Mua ngay
+        findViewById(R.id.btnBuyNow).setOnClickListener(v -> {
+            CustomAdapter.AppItem currentItem;
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                currentItem = new CustomAdapter.AppItem(name, description, price, imageUrl);
+            } else {
+                currentItem = new CustomAdapter.AppItem(name, description, price, imageRes);
+            }
+            CartManager.addToCart(currentItem);
             
-            // Chuyển sang màn hình Giỏ hàng
-            android.content.Intent intent = new android.content.Intent(ProductDetailActivity.this, CartActivity.class);
+            // Chuyển thẳng sang màn hình Thanh toán
+            android.content.Intent intent = new android.content.Intent(ProductDetailActivity.this, CheckoutActivity.class);
             startActivity(intent);
         });
 

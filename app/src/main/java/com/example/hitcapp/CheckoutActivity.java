@@ -59,6 +59,9 @@ public class CheckoutActivity extends AppCompatActivity {
                 return;
             }
 
+            // LƯU ĐƠN HÀNG VÀO LỊCH SỬ TRƯỚC KHI XÓA GIỎ
+            CartManager.saveOrder(this);
+
             // Xử lý thành công
             Toast.makeText(this, "Đặt hàng thành công!", Toast.LENGTH_LONG).show();
             
