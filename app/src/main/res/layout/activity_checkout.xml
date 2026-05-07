@@ -117,12 +117,38 @@
                         android:layout_height="1dp"
                         android:background="#33FFFFFF" />
 
+                    <!-- Chọn Tỉnh/Thành phố -->
+                    <Spinner
+                        android:id="@+id/spnProvince"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:backgroundTint="#FFFFFF"
+                        android:padding="8dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#33FFFFFF" />
+
+                    <!-- Chọn Quận/Huyện -->
+                    <Spinner
+                        android:id="@+id/spnDistrict"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:backgroundTint="#FFFFFF"
+                        android:padding="8dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#33FFFFFF" />
+
                     <EditText
                         android:id="@+id/etAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:hint="Địa chỉ giao hàng"
+                        android:hint="Số nhà, tên đường..."
                         android:padding="12dp"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#B3FFFFFF"
