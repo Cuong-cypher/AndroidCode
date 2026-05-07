@@ -6,8 +6,10 @@ public class CartManager {
     private static ArrayList<CustomAdapter.AppItem> cartList = new ArrayList<>();
 
     public static void addToCart(CustomAdapter.AppItem newItem) {
+        if (newItem == null || newItem.name == null) return;
+        
         for (CustomAdapter.AppItem item : cartList) {
-            if (item.name.equals(newItem.name)) {
+            if (item.name != null && item.name.equals(newItem.name)) {
                 item.quantity += 1;
                 return;
             }
@@ -30,6 +32,8 @@ public class CartManager {
         for (CustomAdapter.AppItem item : cartList) {
             try {
                 String priceStr = item.price;
+                if (priceStr == null || priceStr.isEmpty()) continue;
+
                 if (priceStr.contains("$")) {
                     // USD: Giữ lại dấu chấm thập phân, chỉ xóa dấu phẩy và ký hiệu $
                     priceStr = priceStr.replace("$", "").replace(",", "").trim();

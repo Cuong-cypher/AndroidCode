@@ -127,7 +127,7 @@ public class ProductListActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     productList.clear();
                     for (ProductResponse.Product p : response.body().products) {
-                        String formattedPrice = String.format("$%.2f", p.price);
+                        String formattedPrice = String.format(java.util.Locale.US, "$%.2f", p.price);
                         productList.add(new CustomAdapter.AppItem(p.title, p.description, formattedPrice, p.thumbnail));
                     }
                     adapter.notifyDataSetChanged();
@@ -175,7 +175,7 @@ public class ProductListActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     productList.clear();
                     for (ProductResponse.Product p : response.body().products) {
-                        String formattedPrice = String.format("$%.2f", p.price);
+                        String formattedPrice = String.format(java.util.Locale.US, "$%.2f", p.price);
                         productList.add(new CustomAdapter.AppItem(p.title, p.description, formattedPrice, p.thumbnail));
                     }
                     adapter.notifyDataSetChanged();

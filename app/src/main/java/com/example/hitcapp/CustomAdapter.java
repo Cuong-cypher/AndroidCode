@@ -31,6 +31,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
         public String imageUrl;   // Dùng cho ảnh từ API (link)
         public int quantity = 1;
 
+        // Constructor mặc định cho GSON
+        public AppItem() {
+        }
+
         // Constructor cho ảnh local
         public AppItem(String name, String price, int imageRes) {
             this.name = name;
@@ -93,6 +97,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ProductVie
                 // Gửi cả ID ảnh local và URL ảnh mạng sang màn hình Detail
                 intent.putExtra("PRODUCT_IMAGE", item.imageRes);
                 intent.putExtra("PRODUCT_IMAGE_URL", item.imageUrl);
+                
+                // Kiểm tra nếu context là WishlistActivity thì gửi thêm flag
+                if (context instanceof WishlistActivity) {
+                    intent.putExtra("FROM_WISHLIST", true);
+                }
 
                 if (context instanceof Activity) {
                     ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(

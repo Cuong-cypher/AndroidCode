@@ -1,6 +1,7 @@
 package com.example.hitcapp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,6 +59,14 @@ public class CartActivity extends AppCompatActivity {
                         CartManager.getCartList().clear();
                         adapter.notifyDataSetChanged();
                         updateTotalPrice();
+                        
+                        // Cập nhật lại giao diện sau khi xóa hết
+                        View tvEmptyCart = findViewById(R.id.tvEmptyCart);
+                        if (tvEmptyCart != null) {
+                            tvEmptyCart.setVisibility(android.view.View.VISIBLE);
+                            rvCart.setVisibility(android.view.View.GONE);
+                        }
+
                         Toast.makeText(this, "Đã xóa giỏ hàng", Toast.LENGTH_SHORT).show();
                     })
                     .setNegativeButton("Hủy", null)
@@ -65,6 +74,27 @@ public class CartActivity extends AppCompatActivity {
         });
 
         setupNavigation();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+            updateTotalPrice();
+        }
+        
+        // Cập nhật trạng thái hiển thị của RecyclerView và thông báo trống
+        android.view.View tvEmptyCart = findViewById(R.id.tvEmptyCart);
+        if (tvEmptyCart != null) {
+            if (CartManager.getCartList().isEmpty()) {
+                tvEmptyCart.setVisibility(android.view.View.VISIBLE);
+                rvCart.setVisibility(android.view.View.GONE);
+            } else {
+                tvEmptyCart.setVisibility(android.view.View.GONE);
+                rvCart.setVisibility(android.view.View.VISIBLE);
+            }
+        }
     }
 
     private void setupNavigation() {
@@ -102,8 +132,9 @@ public class CartActivity extends AppCompatActivity {
         if (isUsd) {
             tvTotalPrice.setText(String.format(Locale.US, "$%.2f", total));
         } else {
-            DecimalFormat formatter = new DecimalFormat("#,###");
-            tvTotalPrice.setText(formatter.format(total).replace(",", ".") + " VND");
+            // Sử dụng Locale.US để format số, sau đó thay thế dấu phẩy bằng dấu chấm cho VND
+            String formatted = String.format(Locale.US, "%,.0f", total).replace(',', '.');
+            tvTotalPrice.setText(formatted + " VND");
         }
     }
 }

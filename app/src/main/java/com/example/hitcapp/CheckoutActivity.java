@@ -76,8 +76,8 @@ public class CheckoutActivity extends AppCompatActivity {
         if (isUsd) {
             formattedPrice = String.format(Locale.US, "$%.2f", total);
         } else {
-            DecimalFormat formatter = new DecimalFormat("#,###");
-            formattedPrice = formatter.format(total).replace(",", ".") + " VND";
+            // Sử dụng Locale.US để format số, sau đó thay thế dấu phẩy bằng dấu chấm cho VND
+            formattedPrice = String.format(Locale.US, "%,.0f", total).replace(',', '.') + " VND";
         }
         
         tvSubtotal.setText(formattedPrice);

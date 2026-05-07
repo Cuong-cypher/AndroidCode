@@ -35,8 +35,6 @@ public class WishlistActivity extends AppCompatActivity {
         // Dùng GridLayoutManager (2 cột) để giống giao diện bên ngoài (Home/ProductList)
         rvWishlist.setLayoutManager(new GridLayoutManager(this, 2));
         rvWishlist.setAdapter(adapter);
-
-        setupNavigation();
     }
 
     private void updateEmptyState() {
@@ -49,32 +47,6 @@ public class WishlistActivity extends AppCompatActivity {
         }
     }
 
-    private void setupNavigation() {
-        findViewById(R.id.btnHome).setOnClickListener(v -> {
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-            overridePendingTransition(0, 0);
-        });
-        findViewById(R.id.btnProducts).setOnClickListener(v -> {
-            Intent intent = new Intent(this, ProductListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-            overridePendingTransition(0, 0);
-        });
-        findViewById(R.id.btnCart).setOnClickListener(v -> {
-            Intent intent = new Intent(this, CartActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-            overridePendingTransition(0, 0);
-        });
-        findViewById(R.id.btnProfile).setOnClickListener(v -> {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-            overridePendingTransition(0, 0);
-        });
-    }
 
     @Override
     protected void onResume() {

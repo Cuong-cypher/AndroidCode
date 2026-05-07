@@ -57,9 +57,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         // Nút quay lại
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
+        // Kiểm tra xem có phải mở từ trang Yêu thích không
+        boolean fromWishlist = getIntent().getBooleanExtra("FROM_WISHLIST", false);
+
         // Nút yêu thích
         com.google.android.material.button.MaterialButton btnFav = findViewById(R.id.btnFav);
-        updateFavIcon(btnFav, name);
+        updateFavIcon(btnFav, name, fromWishlist);
 
         btnFav.setOnClickListener(v -> {
             CustomAdapter.AppItem currentItem;
@@ -68,11 +71,17 @@ public class ProductDetailActivity extends AppCompatActivity {
             } else {
                 currentItem = new CustomAdapter.AppItem(name, description, price, imageRes);
             }
-            WishlistManager.toggleWishlist(this, currentItem);
-            updateFavIcon(btnFav, name);
             
-            boolean isFav = WishlistManager.isFavorite(this, name);
-            Toast.makeText(this, isFav ? "Đã thêm vào yêu thích!" : "Đã xóa khỏi yêu thích!", Toast.LENGTH_SHORT).show();
+            WishlistManager.toggleWishlist(this, currentItem);
+            boolean isNowFav = WishlistManager.isFavorite(this, name);
+            
+            if (fromWishlist && !isNowFav) {
+                Toast.makeText(this, "Đã xóa khỏi danh sách yêu thích!", Toast.LENGTH_SHORT).show();
+                finish(); // Đóng trang để quay về danh sách đã cập nhật
+            } else {
+                updateFavIcon(btnFav, name, fromWishlist);
+                Toast.makeText(this, isNowFav ? "Đã thêm vào yêu thích!" : "Đã xóa khỏi yêu thích!", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // Nút Thêm vào giỏ hàng
@@ -112,10 +121,20 @@ public class ProductDetailActivity extends AppCompatActivity {
         fetchSuggestions();
     }
 
-    private void updateFavIcon(com.google.android.material.button.MaterialButton btnFav, String productName) {
+    private void updateFavIcon(com.google.android.material.button.MaterialButton btnFav, String productName, boolean fromWishlist) {
+        if (fromWishlist) {
+            btnFav.setIcon(null);
+            btnFav.setText("X");
+            btnFav.setTextColor(android.graphics.Color.parseColor("#FF4D4D")); // Màu đỏ xóa
+            btnFav.setTextSize(22);
+            btnFav.setTypeface(android.graphics.Typeface.DEFAULT_BOLD);
+            return;
+        }
+        
+        btnFav.setText("");
         if (WishlistManager.isFavorite(this, productName)) {
             btnFav.setIconResource(R.drawable.ic_heart_filled);
-            btnFav.setIconTintResource(android.R.color.transparent); // Giữ nguyên màu của icon gốc (màu đỏ)
+            btnFav.setIconTintResource(android.R.color.transparent);
         } else {
             btnFav.setIconResource(R.drawable.ic_heart_outline);
             btnFav.setIconTintResource(android.R.color.white);
@@ -137,7 +156,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     int count = 0;
                     for (ProductResponse.Product p : response.body().products) {
                         if (count >= 10) break;
-                        String formattedPrice = String.format(Locale.US, "$%.2f", p.price);
+                        String formattedPrice = String.format(java.util.Locale.US, "$%.2f", p.price);
                         suggestionList.add(new CustomAdapter.AppItem(p.title, p.description, formattedPrice, p.thumbnail));
                         count++;
                     }

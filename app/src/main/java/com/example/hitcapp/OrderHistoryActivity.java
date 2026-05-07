@@ -15,6 +15,7 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
     private RecyclerView rvOrderHistory;
     private OrderHistoryAdapter adapter;
+    private ArrayList<ArrayList<CustomAdapter.AppItem>> orderList = new ArrayList<>();
     private TextView tvEmptyHistory;
 
     @Override
@@ -24,47 +25,52 @@ public class OrderHistoryActivity extends AppCompatActivity {
 
         rvOrderHistory = findViewById(R.id.rvOrderHistory);
         tvEmptyHistory = findViewById(R.id.tvEmptyHistory);
+        View btnBack = findViewById(R.id.btnBackOrderHistory);
 
-        findViewById(R.id.btnBackOrderHistory).setOnClickListener(v -> finish());
+        rvOrderHistory.setLayoutManager(new LinearLayoutManager(this));
+        
+        loadOrderHistory();
 
-        findViewById(R.id.btnClearOrderHistory).setOnClickListener(v -> {
-            new androidx.appcompat.app.AlertDialog.Builder(this)
-                    .setTitle("Xác nhận xóa")
-                    .setMessage("Bạn có chắc chắn muốn xóa toàn bộ lịch sử đơn hàng không?")
-                    .setPositiveButton("Xóa", (dialog, which) -> {
-                        android.content.SharedPreferences orderPrefs = getSharedPreferences("Orders", MODE_PRIVATE);
-                        orderPrefs.edit().remove("order_list").apply();
-                        loadOrderHistory(); // Refresh the list
-                    })
-                    .setNegativeButton("Hủy", null)
-                    .show();
-        });
+        btnBack.setOnClickListener(v -> finish());
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         loadOrderHistory();
     }
 
     private void loadOrderHistory() {
         android.content.SharedPreferences pref = getSharedPreferences("Orders", MODE_PRIVATE);
-        String existingOrders = pref.getString("order_list", "[]");
+        String json = pref.getString("order_list", "[]");
 
         try {
             Gson gson = new Gson();
             Type type = new TypeToken<ArrayList<ArrayList<CustomAdapter.AppItem>>>(){}.getType();
-            ArrayList<ArrayList<CustomAdapter.AppItem>> allOrders = gson.fromJson(existingOrders, type);
-
-            if (allOrders == null || allOrders.isEmpty()) {
-                tvEmptyHistory.setVisibility(View.VISIBLE);
-                rvOrderHistory.setVisibility(View.GONE);
-            } else {
-                tvEmptyHistory.setVisibility(View.GONE);
-                rvOrderHistory.setVisibility(View.VISIBLE);
-                adapter = new OrderHistoryAdapter(this, allOrders);
-                rvOrderHistory.setLayoutManager(new LinearLayoutManager(this));
-                rvOrderHistory.setAdapter(adapter);
+            ArrayList<ArrayList<CustomAdapter.AppItem>> savedOrders = gson.fromJson(json, type);
+            
+            if (savedOrders != null) {
+                orderList.clear();
+                orderList.addAll(savedOrders);
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        if (orderList.isEmpty()) {
             tvEmptyHistory.setVisibility(View.VISIBLE);
+            rvOrderHistory.setVisibility(View.GONE);
+        } else {
+            tvEmptyHistory.setVisibility(View.GONE);
+            rvOrderHistory.setVisibility(View.VISIBLE);
+            
+            if (adapter == null) {
+                adapter = new OrderHistoryAdapter(this, orderList);
+                rvOrderHistory.setAdapter(adapter);
+            } else {
+                adapter.notifyDataSetChanged();
+            }
         }
     }
+
 }
