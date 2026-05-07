@@ -73,58 +73,26 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvProfileEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:alpha="0.8"
-            android:text="Khách hàng thân thiết"
+            android:text="email@example.com"
             android:textColor="#FFFFFF" />
 
-        <!-- Phần chọn địa chỉ mới -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginTop="24dp"
-            android:text="Địa chỉ giao hàng"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
-
-        <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnWishlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="8dp"
-            app:cardBackgroundColor="#26FFFFFF"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp"
+            android:text="Danh sách yêu thích"
+            android:textAllCaps="false"
+            app:backgroundTint="#26FFFFFF"
+            app:cornerRadius="12dp"
+            app:icon="@android:drawable/btn_star_big_on"
             app:strokeColor="#4DFFFFFF"
-            app:strokeWidth="1dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
-
-                <Spinner
-                    android:id="@+id/spnProvince"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:padding="8dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="4dp"
-                    android:background="#4DFFFFFF" />
-
-                <Spinner
-                    android:id="@+id/spnDistrict"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:padding="8dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            app:strokeWidth="1dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnOrderHistory"

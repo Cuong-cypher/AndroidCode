@@ -58,9 +58,22 @@ public class ProductDetailActivity extends AppCompatActivity {
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
 
         // Nút yêu thích
-        findViewById(R.id.btnFav).setOnClickListener(v -> 
-            Toast.makeText(this, "Đã thêm vào danh sách yêu thích!", Toast.LENGTH_SHORT).show()
-        );
+        com.google.android.material.button.MaterialButton btnFav = findViewById(R.id.btnFav);
+        updateFavIcon(btnFav, name);
+
+        btnFav.setOnClickListener(v -> {
+            CustomAdapter.AppItem currentItem;
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                currentItem = new CustomAdapter.AppItem(name, description, price, imageUrl);
+            } else {
+                currentItem = new CustomAdapter.AppItem(name, description, price, imageRes);
+            }
+            WishlistManager.toggleWishlist(this, currentItem);
+            updateFavIcon(btnFav, name);
+            
+            boolean isFav = WishlistManager.isFavorite(this, name);
+            Toast.makeText(this, isFav ? "Đã thêm vào yêu thích!" : "Đã xóa khỏi yêu thích!", Toast.LENGTH_SHORT).show();
+        });
 
         // Nút Thêm vào giỏ hàng
         findViewById(R.id.btnAddToCart).setOnClickListener(v -> {
@@ -97,6 +110,16 @@ public class ProductDetailActivity extends AppCompatActivity {
         rvSuggestions.setAdapter(suggestionAdapter);
 
         fetchSuggestions();
+    }
+
+    private void updateFavIcon(com.google.android.material.button.MaterialButton btnFav, String productName) {
+        if (WishlistManager.isFavorite(this, productName)) {
+            btnFav.setIconResource(R.drawable.ic_heart_filled);
+            btnFav.setIconTintResource(android.R.color.transparent); // Giữ nguyên màu của icon gốc (màu đỏ)
+        } else {
+            btnFav.setIconResource(R.drawable.ic_heart_outline);
+            btnFav.setIconTintResource(android.R.color.white);
+        }
     }
 
     private void fetchSuggestions() {

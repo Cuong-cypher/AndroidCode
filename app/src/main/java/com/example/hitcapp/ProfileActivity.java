@@ -13,11 +13,19 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Hiển thị tên người dùng từ SharedPreferences
         android.widget.TextView tvProfileName = findViewById(R.id.tvProfileName);
+        android.widget.TextView tvProfileEmail = findViewById(R.id.tvProfileEmail);
         android.content.SharedPreferences pref = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         String name = pref.getString("name", "Người dùng");
-        if (tvProfileName != null) {
-            tvProfileName.setText(name);
-        }
+        String email = pref.getString("email", "email@example.com");
+
+        if (tvProfileName != null) tvProfileName.setText(name);
+        if (tvProfileEmail != null) tvProfileEmail.setText(email);
+
+        // Nút Danh sách yêu thích
+        findViewById(R.id.btnWishlist).setOnClickListener(v -> {
+            Intent intent = new Intent(this, WishlistActivity.class);
+            startActivity(intent);
+        });
 
         findViewById(R.id.btnLogout).setOnClickListener(v -> {
             // XÓA TRẠNG THÁI ĐĂNG NHẬP
